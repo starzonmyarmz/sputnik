@@ -2,10 +2,12 @@ mod bridge;
 mod editor;
 pub mod engine;
 pub mod params;
+pub mod scope;
 
 use engine::{Engine, Transport};
 use nice_plug::prelude::*;
 use params::SputnikParams;
+use scope::{Scope, ScopeWriter};
 use std::sync::Arc;
 
 static PAGE: editor::Page = editor::Page {
@@ -20,11 +22,19 @@ static PAGE: editor::Page = editor::Page {
 pub struct Sputnik {
     params: Arc<SputnikParams>,
     engine: Engine,
+    scope: Arc<Scope>,
+    scope_writer: ScopeWriter,
 }
 
 impl Default for Sputnik {
     fn default() -> Self {
-        Self { params: Arc::new(SputnikParams::default()), engine: Engine::new(48_000.0) }
+        let scope = Scope::new();
+        Self {
+            params: Arc::new(SputnikParams::default()),
+            engine: Engine::new(48_000.0),
+            scope_writer: ScopeWriter::new(scope.clone(), 48_000.0),
+            scope,
+        }
     }
 }
 
@@ -50,7 +60,7 @@ impl Plugin for Sputnik {
     }
 
     fn editor(&mut self, _executor: AsyncExecutor<Self>) -> Option<Self::Editor> {
-        Some(editor::WebEditor::new(&PAGE, self.params.clone()))
+        Some(editor::WebEditor::new(&PAGE, self.params.clone()).with_feed(scope::feed(self.scope.clone())))
     }
 
     fn activate(
@@ -62,6 +72,7 @@ impl Plugin for Sputnik {
         if self.engine.sample_rate() != buffer_config.sample_rate {
             self.engine = Engine::new(buffer_config.sample_rate);
         }
+        self.scope_writer.set_sample_rate(buffer_config.sample_rate);
         self.engine.set(self.params.settings());
         self.engine.reset();
         true
@@ -87,6 +98,7 @@ impl Plugin for Sputnik {
         self.engine.set(self.params.settings());
         if let [left, right] = buffer.as_slice() {
             self.engine.process(left, right);
+            self.scope_writer.push(left);
         }
         ProcessStatus::Normal
     }

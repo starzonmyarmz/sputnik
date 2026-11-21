@@ -55,23 +55,24 @@ DSP change, not just in CI.
 Settled with the user; keep to it.
 
 - Object: a 1957 mission control console. Cream enamel panel, black
-  bakelite knobs with engraved labels, and a round green phosphor CRT
-  that is the XY pad.
-- Controls: Fuzz, Gate, Synth, Move, Level, in plain words (themed names
-  were turned down). A two-position rotary selector, SPUTTER / SYNTH,
-  above three small trims: Crush, Rate and Low (the Crossover
-  parameter). A metal `stomp` switch at the bottom, on by default, with
-  a red lamp.
-- The XY pad turns the knobs. In Sputter, X is the Gate knob (dragging
-  turns it) and Y is sag, which has no knob. In Synth, X is the filter
-  cutoff and Y its resonance, neither with a knob.
+  bakelite knobs with engraved labels, and a green phosphor CRT
+  oscilloscope.
+- Controls: Fuzz, Gate, Sag, Synth, Move, Level, in plain words (themed
+  names were turned down). A two-position rotary selector, SPUTTER /
+  SYNTH, above two rows of small trims: Tone and Peak (Cutoff and
+  Resonance), then Crush, Rate and Low (Crossover). Every parameter has
+  its own knob: the user doesn't want anything a real pedal couldn't do,
+  so no XY pad or dragging on the screen. A centred metal `stomp` switch
+  at the bottom, on by default, with a red lamp beside it.
 - Version: a small riveted, engraved ID plate in a bottom corner,
   `SPUTNIK-1  No. v1.0.0`.
 - Palette: cream enamel panel #e9e0c9, black bakelite #2b2a27, green
   phosphor #7dff9a on CRT glass #0d1a12, red lamp #ff3b2f, warm grey
   engraving #5b5345. Green belongs to the CRT and red to the lamp only.
-- Art: the satellite is the XY pad's handle and leaves a fading phosphor
-  trail as it's dragged. Nothing else animates.
+- Art: the CRT shows the real output as a triggered oscilloscope trace
+  with phosphor persistence, flat in silence. `scope.rs` captures it on
+  the audio thread and the editor's feed sends each new frame. Nothing
+  else animates.
 - Wordmark: Stardos Stencil Bold, cream on a riveted black bakelite
   badge. Only the SPUTNIK glyphs are embedded; re-subset from
   `ui/fonts/StardosStencil-Bold.ttf` if the wordmark's letters change.

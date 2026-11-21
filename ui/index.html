@@ -142,8 +142,6 @@
     block-size: 100%;
     border-radius: 26% / 34%;
     overflow: hidden;
-    cursor: crosshair;
-    touch-action: none;
     background:
       radial-gradient(60% 60% at 50% 50%, rgb(125 255 154 / 0.1), transparent 70%),
       var(--glass);
@@ -168,47 +166,31 @@
     }
   }
 
-  .trail {
+  .trace {
     position: absolute;
     inset: 0;
     inline-size: 100%;
     block-size: 100%;
   }
 
-  .satellite {
+  .crt-label {
     position: absolute;
-    inset-inline-start: calc(var(--x, 0.5) * 100%);
-    inset-block-start: calc((1 - var(--y, 0.5)) * 100%);
-    inline-size: 26px;
-    block-size: 26px;
-    translate: -50% -50%;
-    color: var(--phosphor);
-    filter: drop-shadow(0 0 3px rgb(125 255 154 / 0.8));
-    outline: none;
-
-    &:focus-visible { filter: drop-shadow(0 0 6px var(--phosphor)) drop-shadow(0 0 2px var(--phosphor)); }
-
-    svg { display: block; overflow: visible; }
-  }
-
-  .axis {
-    position: absolute;
+    inset-block-end: 6px;
+    inset-inline-start: 50%;
+    translate: -50% 0;
     color: #b9b1a0;
     text-shadow: none;
-
-    &.x { inset-block-end: 6px; inset-inline-start: 50%; translate: -50% 0; }
-    &.y { inset-block-start: 50%; inset-inline-start: 13px; translate: -50% -50%; rotate: -90deg; }
   }
 
   /* ---------- side column ---------- */
 
   .side {
     grid-row: 1 / 3;
-    display: grid;
-    grid-template-rows: 1fr auto;
-    justify-items: center;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    padding-block: 26px 4px;
+    gap: 14px;
+    padding-block-start: 30px;
     border-radius: 10px;
     box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.18), 0 1px 0 rgb(255 255 255 / 0.6);
   }
@@ -345,31 +327,25 @@
     .control:hover > &, .control.active > &, .control:focus-within > & { opacity: 1; }
   }
 
-  .xy-value {
-    position: absolute;
-    inset-block-start: 10px;
-    inset-inline: 0;
-    text-align: center;
-    color: var(--phosphor);
-    font: 600 10px/1 "Helvetica Neue", Arial, sans-serif;
-    opacity: 0;
-    transition: opacity 120ms;
-    pointer-events: none;
-
-    .screen:hover &, .screen.active &, .screen:focus-within & { opacity: 0.85; }
-  }
-
   /* ---------- footer ---------- */
 
   .footer {
     grid-column: 1 / -1;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    gap: 18px;
-    padding-inline-start: 8px;
+  }
+
+  .stomp-group {
+    grid-column: 2;
+    position: relative;
   }
 
   .lamp {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: calc(100% + 18px);
+    margin-block-start: -9px;
     inline-size: 18px;
     block-size: 18px;
     border-radius: 50%;
@@ -408,7 +384,7 @@
 
   .plate {
     position: relative;
-    margin-inline-start: auto;
+    justify-self: end;
     padding: 6px 20px;
     border-radius: 2px;
     background: linear-gradient(180deg, #d8cdb0, #bfb393);
@@ -431,29 +407,18 @@
   <div class="badge" aria-hidden="true"><span class="rivet"></span>SPUTNIK<span class="rivet"></span></div>
 
   <div class="crt">
-    <div class="screen" id="screen">
-      <canvas class="trail" id="trail"></canvas>
-      <div class="satellite" id="satellite" tabindex="0" role="slider">
-        <svg viewBox="-12 -12 24 24" aria-hidden="true">
-          <g fill="none" stroke="currentColor" stroke-linecap="round">
-            <path d="M-4 2.5 L-21 9.5" stroke-width="1.1"/>
-            <path d="M-3 4 L-17.5 14.5" stroke-width="0.9"/>
-            <path d="M-5 -0.5 L-22.5 3" stroke-width="0.8"/>
-            <path d="M-1 5 L-11 19" stroke-width="1"/>
-          </g>
-          <circle r="7.5" fill="var(--glass)" stroke="currentColor" stroke-width="1.7"/>
-          <path d="M-7 1.5 Q0 4 7 1" fill="none" stroke="currentColor" stroke-width="0.8"/>
-          <path d="M-4.2 -3 A5 5 0 0 1 1.8 -5.4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <span class="xy-value" id="xy-value"></span>
+    <div class="screen">
+      <canvas class="trace" id="trace" aria-hidden="true"></canvas>
     </div>
-    <span class="label axis x" id="axis-x"></span>
-    <span class="label axis y" id="axis-y"></span>
+    <span class="label crt-label" aria-hidden="true">Signal</span>
   </div>
 
   <div class="side">
     <div class="control" data-knob="mode" data-positions="Sputter Synth" style="--size: 58px"></div>
+    <div class="trims">
+      <div class="control" data-knob="cutoff" data-label="Tone" style="--size: 30px"></div>
+      <div class="control" data-knob="resonance" data-label="Peak" style="--size: 30px"></div>
+    </div>
     <div class="trims">
       <div class="control" data-knob="crush" style="--size: 30px"></div>
       <div class="control" data-knob="rate" style="--size: 30px"></div>
@@ -462,16 +427,19 @@
   </div>
 
   <div class="knobs">
-    <div class="control" data-knob="fuzz" style="--size: 54px"></div>
-    <div class="control" data-knob="gate" style="--size: 54px"></div>
-    <div class="control" data-knob="synth" style="--size: 54px"></div>
-    <div class="control" data-knob="move" style="--size: 54px"></div>
-    <div class="control" data-knob="level" style="--size: 54px"></div>
+    <div class="control" data-knob="fuzz" style="--size: 52px"></div>
+    <div class="control" data-knob="gate" style="--size: 52px"></div>
+    <div class="control" data-knob="sag" style="--size: 52px"></div>
+    <div class="control" data-knob="synth" style="--size: 52px"></div>
+    <div class="control" data-knob="move" style="--size: 52px"></div>
+    <div class="control" data-knob="level" style="--size: 52px"></div>
   </div>
 
   <div class="footer">
-    <div class="stomp-wrap"><button class="stomp" id="stomp" aria-label="Stomp" aria-pressed="true"></button></div>
-    <span class="lamp" id="lamp"></span>
+    <div class="stomp-group">
+      <div class="stomp-wrap"><button class="stomp" id="stomp" aria-label="Stomp" aria-pressed="true"></button></div>
+      <span class="lamp" id="lamp"></span>
+    </div>
     <span class="plate"><span class="rivet"></span>SPUTNIK-1 &nbsp;No. <span id="version"></span><span class="rivet"></span></span>
   </div>
 </main>
@@ -524,7 +492,7 @@
     knob.className = "knob";
     knob.tabIndex = 0;
     knob.setAttribute("role", "slider");
-    knob.setAttribute("aria-label", p.name);
+    knob.setAttribute("aria-label", host.dataset.label ?? p.name);
     knob.setAttribute("aria-valuemin", "0");
     knob.setAttribute("aria-valuemax", "1");
     const positions = host.dataset.positions?.split(" ") ?? [];
@@ -631,123 +599,53 @@
     }, { passive: false });
   }
 
-  // ---------- XY pad ----------
+  // ---------- scope ----------
 
-  // Sputter's X is the Gate knob, so dragging the satellite turns it.
-  const axes = { sputter: ["gate", "sag"], synth: ["cutoff", "resonance"] };
-  const TRAIL_SECONDS = 1.4;
+  // Output peaks sit near 0.3, so this puts a full fuzz at about a third of
+  // the screen's height either side of centre.
+  const SCOPE_GAIN = 1.1;
+  const SCOPE_IDLE_MS = 150;
 
-  function buildPad() {
-    const screen = document.getElementById("screen");
-    const satellite = document.getElementById("satellite");
-    const canvas = document.getElementById("trail");
-    const readout = document.getElementById("xy-value");
-    const axisX = document.getElementById("axis-x");
-    const axisY = document.getElementById("axis-y");
+  function buildScope() {
+    const canvas = document.getElementById("trace");
+    canvas.width = Math.round(canvas.clientWidth * devicePixelRatio);
+    canvas.height = Math.round(canvas.clientHeight * devicePixelRatio);
     const ctx = canvas.getContext("2d");
-    const trail = [];
-    let frame = 0;
+    const flat = new Array(64).fill(0);
+    let last = 0;
 
-    const current = () => axes[params.get("mode").value >= 0.5 ? "synth" : "sputter"];
-
-    function draw() {
+    function draw(points) {
       const { width, height } = canvas;
-      const now = performance.now() / 1000;
-      while (trail.length && now - trail[0].t > TRAIL_SECONDS) trail.shift();
-      ctx.clearRect(0, 0, width, height);
-      ctx.lineCap = "round";
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.fillStyle = "rgb(0 0 0 / 0.55)";
+      ctx.fillRect(0, 0, width, height);
+      ctx.globalCompositeOperation = "source-over";
+      ctx.strokeStyle = "rgb(125 255 154 / 0.9)";
       ctx.shadowColor = "rgb(125 255 154)";
-      ctx.shadowBlur = 8;
-      for (let i = 1; i < trail.length; i++) {
-        const a = trail[i - 1];
-        const b = trail[i];
-        const life = 1 - (now - b.t) / TRAIL_SECONDS;
-        ctx.strokeStyle = `rgb(125 255 154 / ${(life * 0.7).toFixed(2)})`;
-        ctx.lineWidth = (1 + life * 2.5) * devicePixelRatio;
-        ctx.beginPath();
-        ctx.moveTo(a.x * width, (1 - a.y) * height);
-        ctx.lineTo(b.x * width, (1 - b.y) * height);
-        ctx.stroke();
-      }
-      frame = trail.length > 1 ? requestAnimationFrame(draw) : 0;
+      ctx.shadowBlur = 6 * devicePixelRatio;
+      ctx.lineWidth = 1.6 * devicePixelRatio;
+      ctx.lineJoin = "round";
+      ctx.beginPath();
+      points.forEach((p, i) => {
+        const x = (i / (points.length - 1)) * width;
+        const y = height / 2 - Math.max(-0.45, Math.min(0.45, p * SCOPE_GAIN)) * height;
+        if (i) ctx.lineTo(x, y);
+        else ctx.moveTo(x, y);
+      });
+      ctx.stroke();
     }
 
-    function place() {
-      const [xId, yId] = current();
-      const x = params.get(xId);
-      const y = params.get(yId);
-      satellite.style.setProperty("--x", x.value.toFixed(4));
-      satellite.style.setProperty("--y", y.value.toFixed(4));
-      satellite.setAttribute("aria-label", `${x.name} and ${y.name}`);
-      satellite.setAttribute("aria-valuetext", `${x.name} ${x.text}, ${y.name} ${y.text}`);
-      readout.textContent = `${x.name} ${x.text} · ${y.name} ${y.text}`;
-      axisX.textContent = `${x.name} →`;
-      axisY.textContent = `${y.name} →`;
-      const last = trail.at(-1);
-      if (!last || Math.hypot(last.x - x.value, last.y - y.value) > 0.004) {
-        trail.push({ x: x.value, y: y.value, t: performance.now() / 1000 });
-        if (!frame) frame = requestAnimationFrame(draw);
-      }
-    }
+    setInterval(() => {
+      if (performance.now() - last > SCOPE_IDLE_MS) draw(flat);
+    }, 50);
 
-    function resize() {
-      canvas.width = Math.round(screen.clientWidth * devicePixelRatio);
-      canvas.height = Math.round(screen.clientHeight * devicePixelRatio);
-    }
-    resize();
-
-    let pending = false;
-    const schedule = () => {
-      if (pending) return;
-      pending = true;
-      queueMicrotask(() => { pending = false; place(); });
+    return (points) => {
+      last = performance.now();
+      draw(points);
     };
-    for (const id of ["mode", ...axes.sputter, ...axes.synth]) watch(id, schedule);
-    watch("mode", () => { trail.length = 0; });
-
-    function setFrom(e) {
-      const rect = screen.getBoundingClientRect();
-      const [xId, yId] = current();
-      setParam(xId, (e.clientX - rect.left) / rect.width);
-      setParam(yId, 1 - (e.clientY - rect.top) / rect.height);
-    }
-
-    screen.addEventListener("pointerdown", (e) => {
-      if (e.button !== 0) return;
-      const ids = current();
-      screen.setPointerCapture(e.pointerId);
-      satellite.focus();
-      screen.classList.add("active");
-      trail.length = 0;
-      ids.forEach((id) => { dragging.add(id); bridge({ type: "begin", id }); });
-      setFrom(e);
-      const move = (ev) => setFrom(ev);
-      const up = () => {
-        screen.removeEventListener("pointermove", move);
-        screen.removeEventListener("pointerup", up);
-        screen.removeEventListener("pointercancel", up);
-        screen.classList.remove("active");
-        ids.forEach((id) => { dragging.delete(id); bridge({ type: "end", id }); });
-      };
-      screen.addEventListener("pointermove", move);
-      screen.addEventListener("pointerup", up);
-      screen.addEventListener("pointercancel", up);
-    });
-
-    screen.addEventListener("dblclick", () => {
-      const ids = current();
-      gesture(ids, () => ids.forEach((id) => setParam(id, params.get(id).default)));
-    });
-
-    satellite.addEventListener("keydown", (e) => {
-      const step = { ArrowRight: [0, 1], ArrowLeft: [0, -1], ArrowUp: [1, 1], ArrowDown: [1, -1] }[e.key];
-      if (!step) return;
-      e.preventDefault();
-      e.stopPropagation();
-      const id = current()[step[0]];
-      gesture([id], () => setParam(id, params.get(id).value + step[1] * (e.shiftKey ? 0.1 : 0.01)));
-    });
   }
+
+  let drawScope = () => {};
 
   // ---------- stomp ----------
 
@@ -767,7 +665,7 @@
   function build() {
     if (!built) {
       document.querySelectorAll("[data-knob]").forEach(buildKnob);
-      buildPad();
+      drawScope = buildScope();
       buildStomp();
       built = true;
     }
@@ -791,6 +689,7 @@
   window.onPluginMessage = (msg) => {
     switch (msg.type) {
       case "key": return forwardKey(msg);
+      case "scope": return drawScope(msg.points);
       case "init":
         document.getElementById("version").textContent = `v${msg.version}`;
         if (!built) msg.params.forEach((p) => params.set(p.id, { ...p, value: p.default, text: "" }));
