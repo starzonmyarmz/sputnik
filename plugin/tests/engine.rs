@@ -1,6 +1,6 @@
 mod support;
 
-use example::engine::Engine;
+use sputnik::engine::Engine;
 
 const SR: f32 = 48_000.0;
 

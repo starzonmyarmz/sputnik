@@ -7,37 +7,37 @@ use nice_plug::prelude::*;
 use std::sync::Arc;
 
 static PAGE: editor::Page = editor::Page {
-    title: "Example",
+    title: "Sputnik",
     size: (360, 220),
     html: include_str!("../../ui/index.html"),
     version: env!("CARGO_PKG_VERSION"),
     background: (27, 26, 25, 255),
-    dev_url_var: "EXAMPLE_UI_URL",
+    dev_url_var: "SPUTNIK_UI_URL",
 };
 
-pub struct Example {
-    params: Arc<ExampleParams>,
+pub struct Sputnik {
+    params: Arc<SputnikParams>,
     engine: Engine,
 }
 
 #[derive(Params)]
-struct ExampleParams {
+struct SputnikParams {
     #[id = "gain"]
     gain: FloatParam,
 }
 
-impl Default for Example {
+impl Default for Sputnik {
     fn default() -> Self {
         let gain = FloatParam::new("Gain", util::db_to_gain(0.0), FloatRange::gain_range(-30.0, 30.0))
             .with_unit(" dB")
             .with_value_to_string(formatters::v2s_f32_gain_to_db(2))
             .with_string_to_value(formatters::s2v_f32_gain_to_db());
-        Self { params: Arc::new(ExampleParams { gain }), engine: Engine::new(48_000.0) }
+        Self { params: Arc::new(SputnikParams { gain }), engine: Engine::new(48_000.0) }
     }
 }
 
-impl Plugin for Example {
-    const NAME: &'static str = "Example";
+impl Plugin for Sputnik {
+    const NAME: &'static str = "Sputnik";
     const VENDOR: &'static str = "Dan Marino";
     const URL: &'static str = "";
     const EMAIL: &'static str = "";
@@ -92,18 +92,18 @@ impl Plugin for Example {
     }
 }
 
-impl ClapPlugin for Example {
-    const CLAP_ID: &'static str = "com.danmarino.example";
-    const CLAP_DESCRIPTION: Option<&'static str> = Some("A gain knob");
+impl ClapPlugin for Sputnik {
+    const CLAP_ID: &'static str = "com.danmarino.sputnik";
+    const CLAP_DESCRIPTION: Option<&'static str> = Some("A synth fuzz");
     const CLAP_MANUAL_URL: Option<&'static str> = None;
     const CLAP_SUPPORT_URL: Option<&'static str> = None;
-    const CLAP_FEATURES: &'static [ClapFeature] = &[ClapFeature::AudioEffect, ClapFeature::Stereo];
+    const CLAP_FEATURES: &'static [ClapFeature] = &[ClapFeature::AudioEffect, ClapFeature::Distortion, ClapFeature::Stereo];
 }
 
-impl Vst3Plugin for Example {
-    const VST3_CLASS_ID: [u8; 16] = *b"ExampleDanMarino";
-    const VST3_SUBCATEGORIES: &'static [Vst3SubCategory] = &[Vst3SubCategory::Fx];
+impl Vst3Plugin for Sputnik {
+    const VST3_CLASS_ID: [u8; 16] = *b"SputnikDanMarino";
+    const VST3_SUBCATEGORIES: &'static [Vst3SubCategory] = &[Vst3SubCategory::Fx, Vst3SubCategory::Distortion];
 }
 
-nice_export_clap!(Example);
-nice_export_vst3!(Example);
+nice_export_clap!(Sputnik);
+nice_export_vst3!(Sputnik);

@@ -11,8 +11,8 @@ concurrency:
   group: release-${{ github.ref_name }}
 
 env:
-  CRATE: example
-  PLUGIN: Example
+  CRATE: sputnik
+  PLUGIN: Sputnik
 
 jobs:
   version:
