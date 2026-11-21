@@ -1,6 +1,6 @@
 # Sputnik
 
-<img src="docs/sputnik.png" width="504" alt="Sputnik, a cream enamel mission-control console with a stencilled SPUTNIK badge, a green phosphor oscilloscope showing the output, a Sputter/Synth selector with tone, peak, crush, rate and low trims, a row of fuzz, gate, sag, synth, move and level bakelite knobs, a centred footswitch with a red lamp, and a riveted ID plate">
+<img src="docs/sputnik.png" width="555" alt="Sputnik, a cream enamel mission-control console with a stencilled SPUTNIK badge, a green phosphor oscilloscope showing the output, a Sputter/Synth selector with tone, peak, crush, rate and low trims, a row of fuzz, gate, sag, synth, move and level bakelite knobs, a centred footswitch with a red lamp, and a riveted ID plate">
 
 A digital synth fuzz for guitar and bass, as a VST3 and CLAP plugin for
 macOS and Windows. A square-wave fuzz that chokes and sputters, with an
