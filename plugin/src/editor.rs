@@ -33,9 +33,14 @@ pub struct Page {
 
 const FRAME: Duration = Duration::from_micros(16_667);
 
+/// Polled every frame once the page is ready; a message it returns is sent
+/// to the page as is.
+pub type Feed = Arc<dyn Fn() -> Option<Value> + Send + Sync>;
+
 pub struct WebEditor {
     page: &'static Page,
     params: Arc<dyn Params>,
+    feed: Option<Feed>,
     changed: Arc<AtomicBool>,
     scale_factor: Arc<AtomicU64>,
 }
@@ -45,9 +50,15 @@ impl WebEditor {
         Self {
             page,
             params,
+            feed: None,
             changed: Arc::new(AtomicBool::new(true)),
             scale_factor: Arc::new(AtomicU64::new(1f64.to_bits())),
         }
+    }
+
+    pub fn with_feed(mut self, feed: Feed) -> Self {
+        self.feed = Some(feed);
+        self
     }
 }
 
@@ -89,6 +100,7 @@ impl Editor for WebEditor {
         });
         let page = self.page;
         let params = self.params.clone();
+        let feed = self.feed.clone();
         let changed = self.changed.clone();
         changed.store(true, Ordering::Release);
         let settings = WindowSettings::new()
@@ -113,6 +125,7 @@ impl Editor for WebEditor {
                         tx: Some(tx),
                         inbox,
                         bridge: Bridge::new(params, page.version),
+                        feed,
                         ready: false,
                         page_has_focus: false,
                     }),
@@ -199,6 +212,7 @@ struct State {
     tx: Option<Sender<String>>,
     inbox: Receiver<String>,
     bridge: Bridge,
+    feed: Option<Feed>,
     ready: bool,
     /// Something on the page has keyboard focus.
     page_has_focus: bool,
@@ -268,6 +282,7 @@ impl State {
             let changed = self.changed.swap(false, Ordering::AcqRel);
             let mut out = Vec::new();
             self.bridge.poll(changed, &mut out);
+            out.extend(self.feed.as_ref().and_then(|feed| feed()));
             self.send(out);
         }
     }
