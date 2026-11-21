@@ -4,13 +4,27 @@
 <meta charset="utf-8">
 <title>Sputnik</title>
 <style>
+  @font-face {
+    font-family: "Stardos Stencil";
+    font-weight: 700;
+    src: url(data:font/woff2;base64,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) format("woff2");
+  }
+
   :root {
-    --bg: #1b1a19;
-    --panel: #262523;
-    --ink: #f2efe8;
-    --muted: #8f8b83;
-    --accent: #ff7a3d;
-    --track: #3a3835;
+    --enamel: #e9e0c9;
+    --enamel-hi: #f3ecda;
+    --enamel-lo: #d6cbaf;
+    --bakelite: #2b2a27;
+    --bakelite-hi: #45423d;
+    --bakelite-lo: #181716;
+    --engrave: #5b5345;
+    --phosphor: #7dff9a;
+    --glass: #0d1a12;
+    --lamp: #ff3b2f;
+    --chrome: #c9c6bf;
+    --chrome-hi: #fbfaf6;
+    --chrome-lo: #6f6c66;
+    --label: 700 9px/1 "Helvetica Neue", Arial, sans-serif;
   }
 
   * { box-sizing: border-box; }
@@ -24,13 +38,7 @@
     cursor: default;
   }
 
-  body {
-    display: grid;
-    place-items: center;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: -apple-system, "Segoe UI", sans-serif;
-  }
+  body { background: var(--enamel); }
 
   button {
     font: inherit;
@@ -40,119 +48,433 @@
     padding: 0;
   }
 
-  :focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 4px;
-  }
-
-  main {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 28px;
-    padding: 28px;
-    border-radius: 16px;
-    background: var(--panel);
-  }
-
-  .version {
-    position: absolute;
-    inset-block-end: 10px;
-    inset-inline-end: 12px;
-    margin: 0;
-    font-size: 10px;
-    letter-spacing: 0.04em;
-    color: var(--muted);
-  }
-
-  .control {
+  .console {
+    position: relative;
+    inline-size: 600px;
+    block-size: 460px;
+    padding: 22px 26px;
     display: grid;
-    justify-items: center;
-    gap: 8px;
-    inline-size: 72px;
+    grid-template-columns: 330px 1fr;
+    grid-template-rows: 58px 176px 84px 62px;
+    column-gap: 22px;
+    row-gap: 12px;
+    background:
+      radial-gradient(130% 90% at 25% 0%, rgb(255 255 255 / 0.45), transparent 55%),
+      radial-gradient(80% 60% at 90% 100%, rgb(120 100 60 / 0.12), transparent 70%),
+      linear-gradient(180deg, var(--enamel-hi), var(--enamel) 35%, var(--enamel-lo));
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.18), inset 0 2px 0 rgb(255 255 255 / 0.6), inset 0 -3px 6px rgb(0 0 0 / 0.12);
   }
 
-  .name {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .text {
-    font-size: 12px;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-  }
-
-  .knob {
-    --arc: calc(var(--turn) * 270deg);
-    position: relative;
-    inline-size: 56px;
-    aspect-ratio: 1;
+  .screw {
+    position: absolute;
+    inline-size: 11px;
+    block-size: 11px;
     border-radius: 50%;
-    touch-action: none;
-    cursor: ns-resize;
-    background: conic-gradient(from -135deg, var(--accent) 0 var(--arc), var(--track) var(--arc) 270deg, transparent 270deg);
-    mask: radial-gradient(circle, transparent 55%, #000 56%);
-  }
-
-  .dial {
-    position: relative;
-    inline-size: 56px;
-    aspect-ratio: 1;
-
-    & .pointer {
-      position: absolute;
-      inset: 0;
-      rotate: calc(var(--turn) * 270deg - 135deg);
-      pointer-events: none;
-
-      &::before {
-        content: "";
-        position: absolute;
-        inset-inline-start: calc(50% - 1px);
-        inset-block-start: 16%;
-        inline-size: 2px;
-        block-size: 26%;
-        border-radius: 1px;
-        background: var(--ink);
-      }
-    }
-  }
-
-  .switch {
-    inline-size: 44px;
-    block-size: 24px;
-    border-radius: 12px;
-    background: var(--track);
-    position: relative;
-    cursor: pointer;
-    transition: background 120ms;
+    background: radial-gradient(circle at 35% 30%, var(--chrome-hi), var(--chrome) 50%, var(--chrome-lo));
+    box-shadow: 0 1px 1px rgb(0 0 0 / 0.45), inset 0 0 0 0.5px rgb(0 0 0 / 0.3);
 
     &::after {
       content: "";
       position: absolute;
-      inset-block: 3px;
-      inset-inline-start: 3px;
-      inline-size: 18px;
+      inset: 4.5px 1.5px;
+      border-radius: 1px;
+      background: rgb(0 0 0 / 0.5);
+      rotate: var(--tilt);
+    }
+
+    &:nth-of-type(1) { inset-block-start: 8px; inset-inline-start: 8px; --tilt: 18deg; }
+    &:nth-of-type(2) { inset-block-start: 8px; inset-inline-end: 8px; --tilt: -34deg; }
+    &:nth-of-type(3) { inset-block-end: 8px; inset-inline-start: 8px; --tilt: 71deg; }
+    &:nth-of-type(4) { inset-block-end: 8px; inset-inline-end: 8px; --tilt: 5deg; }
+  }
+
+  .label {
+    font: var(--label);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--engrave);
+    text-shadow: 0 1px 0 rgb(255 255 255 / 0.55);
+  }
+
+  /* ---------- badge ---------- */
+
+  .badge {
+    position: relative;
+    display: grid;
+    place-items: center;
+    border-radius: 6px;
+    background: linear-gradient(180deg, var(--bakelite-hi), var(--bakelite) 55%, var(--bakelite-lo));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12), inset 0 -2px 3px rgb(0 0 0 / 0.5), 0 2px 3px rgb(0 0 0 / 0.35);
+    color: var(--enamel);
+    font: 700 46px/1 "Stardos Stencil", serif;
+    letter-spacing: 0.06em;
+    text-shadow: 0 -1px 0 rgb(0 0 0 / 0.6);
+    padding-block-start: 4px;
+  }
+
+  .rivet {
+    position: absolute;
+    inset-block-start: 50%;
+    inline-size: 7px;
+    block-size: 7px;
+    margin-block-start: -3.5px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff8e6, #a99f86 60%, #6d6655);
+    box-shadow: 0 1px 1px rgb(0 0 0 / 0.5);
+
+    &:first-child { inset-inline-start: 10px; }
+    &:last-child { inset-inline-end: 10px; }
+  }
+
+  /* ---------- CRT ---------- */
+
+  .crt {
+    position: relative;
+    grid-row: 2;
+    padding: 12px 12px 22px 24px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, var(--bakelite-hi), var(--bakelite) 40%, var(--bakelite-lo));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.1), 0 3px 5px rgb(0 0 0 / 0.4);
+  }
+
+  .screen {
+    position: relative;
+    block-size: 100%;
+    border-radius: 26% / 34%;
+    overflow: hidden;
+    cursor: crosshair;
+    touch-action: none;
+    background:
+      radial-gradient(60% 60% at 50% 50%, rgb(125 255 154 / 0.1), transparent 70%),
+      var(--glass);
+    box-shadow: inset 0 0 0 2px #070d09, inset 0 0 22px 6px rgb(0 0 0 / 0.85);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(90deg, rgb(125 255 154 / 0.1) 0 1px, transparent 1px 10%),
+        repeating-linear-gradient(0deg, rgb(125 255 154 / 0.1) 0 1px, transparent 1px 12.5%);
+      background-position: center;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(70% 50% at 30% 15%, rgb(255 255 255 / 0.1), transparent 60%);
+    }
+  }
+
+  .trail {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .satellite {
+    position: absolute;
+    inset-inline-start: calc(var(--x, 0.5) * 100%);
+    inset-block-start: calc((1 - var(--y, 0.5)) * 100%);
+    inline-size: 26px;
+    block-size: 26px;
+    translate: -50% -50%;
+    color: var(--phosphor);
+    filter: drop-shadow(0 0 3px rgb(125 255 154 / 0.8));
+    outline: none;
+
+    &:focus-visible { filter: drop-shadow(0 0 6px var(--phosphor)) drop-shadow(0 0 2px var(--phosphor)); }
+
+    svg { display: block; overflow: visible; }
+  }
+
+  .axis {
+    position: absolute;
+    color: #b9b1a0;
+    text-shadow: none;
+
+    &.x { inset-block-end: 6px; inset-inline-start: 50%; translate: -50% 0; }
+    &.y { inset-block-start: 50%; inset-inline-start: 13px; translate: -50% -50%; rotate: -90deg; }
+  }
+
+  /* ---------- side column ---------- */
+
+  .side {
+    grid-row: 1 / 3;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    justify-items: center;
+    align-items: center;
+    padding-block: 26px 4px;
+    border-radius: 10px;
+    box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.18), 0 1px 0 rgb(255 255 255 / 0.6);
+  }
+
+  .trims {
+    display: flex;
+    gap: 22px;
+  }
+
+  /* ---------- knobs ---------- */
+
+  .knobs {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-around;
+    align-items: end;
+    padding-inline: 10px;
+  }
+
+  .control {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 13px;
+  }
+
+  .knob {
+    --angle: calc(var(--turn, 0) * var(--sweep) - var(--sweep) / 2);
+    position: relative;
+    inline-size: var(--size);
+    block-size: var(--size);
+    border-radius: 50%;
+    cursor: ns-resize;
+    outline: none;
+    touch-action: none;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
       border-radius: 50%;
-      background: var(--ink);
-      transition: translate 120ms;
+      box-shadow: 0 4px 5px rgb(0 0 0 / 0.4), 0 1px 1px rgb(0 0 0 / 0.5);
     }
 
-    &[aria-checked="true"] {
-      background: var(--accent);
+    &:focus-visible::before { box-shadow: 0 4px 5px rgb(0 0 0 / 0.4), 0 0 0 2px var(--engrave); }
 
-      &::after { translate: 20px 0; }
+    .ticks {
+      position: absolute;
+      inset: -8px;
+
+      i {
+        position: absolute;
+        inset-inline-start: 50%;
+        inset-block-start: 0;
+        inline-size: 1.5px;
+        block-size: 4px;
+        margin-inline-start: -0.75px;
+        background: var(--engrave);
+        transform-origin: 50% calc(var(--size) / 2 + 8px);
+
+        &.major { block-size: 6px; }
+      }
     }
+
+    .grip {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: repeating-conic-gradient(var(--bakelite-lo) 0 5deg, var(--bakelite-hi) 5deg 10deg);
+      rotate: var(--angle);
+    }
+
+    .cap {
+      position: absolute;
+      inset: 14%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 35%, var(--bakelite-hi), var(--bakelite) 65%, var(--bakelite-lo));
+      box-shadow: 0 0 0 1px rgb(0 0 0 / 0.5);
+    }
+
+    .pointer {
+      position: absolute;
+      inset: 0;
+      rotate: var(--angle);
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset-inline-start: 50%;
+        inset-block-start: 7%;
+        inline-size: 2.5px;
+        block-size: 36%;
+        margin-inline-start: -1.25px;
+        border-radius: 2px;
+        background: var(--enamel);
+      }
+    }
+
+    .gloss {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(60% 45% at 38% 22%, rgb(255 255 255 / 0.22), transparent 70%);
+    }
+
+    .positions span {
+      position: absolute;
+      translate: -50% -50%;
+      font: var(--label);
+      letter-spacing: 0.12em;
+      color: var(--engrave);
+      opacity: 0.55;
+      white-space: nowrap;
+
+      &.on { opacity: 1; }
+    }
+  }
+
+  .value {
+    position: absolute;
+    inset-block-start: calc(100% + 4px);
+    padding: 3px 6px;
+    border-radius: 3px;
+    background: var(--bakelite);
+    color: var(--enamel);
+    font: 600 10px/1 "Helvetica Neue", Arial, sans-serif;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 120ms;
+    z-index: 1;
+
+    .control:hover > &, .control.active > &, .control:focus-within > & { opacity: 1; }
+  }
+
+  .xy-value {
+    position: absolute;
+    inset-block-start: 10px;
+    inset-inline: 0;
+    text-align: center;
+    color: var(--phosphor);
+    font: 600 10px/1 "Helvetica Neue", Arial, sans-serif;
+    opacity: 0;
+    transition: opacity 120ms;
+    pointer-events: none;
+
+    .screen:hover &, .screen.active &, .screen:focus-within & { opacity: 0.85; }
+  }
+
+  /* ---------- footer ---------- */
+
+  .footer {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-inline-start: 8px;
+  }
+
+  .lamp {
+    inline-size: 18px;
+    block-size: 18px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #8a3a33, #4a1511 70%);
+    box-shadow: 0 0 0 3px var(--chrome-lo), 0 0 0 4px var(--chrome-hi), 0 2px 3px 4px rgb(0 0 0 / 0.25);
+    transition: background 80ms, box-shadow 80ms;
+
+    &.on {
+      background: radial-gradient(circle at 40% 35%, #fff1ec, var(--lamp) 45%, #a3160d);
+      box-shadow: 0 0 0 3px var(--chrome-lo), 0 0 0 4px var(--chrome-hi), 0 0 14px 5px rgb(255 59 47 / 0.55);
+    }
+  }
+
+  .stomp-wrap {
+    display: grid;
+    place-items: center;
+    inline-size: 58px;
+    block-size: 58px;
+    border-radius: 50%;
+    background: conic-gradient(var(--chrome-hi), var(--chrome-lo) 60deg, var(--chrome) 120deg, var(--chrome-hi) 180deg, var(--chrome-lo) 240deg, var(--chrome) 300deg, var(--chrome-hi));
+    box-shadow: 0 3px 5px rgb(0 0 0 / 0.4), inset 0 0 0 1px rgb(0 0 0 / 0.3);
+  }
+
+  .stomp {
+    inline-size: 38px;
+    block-size: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    background: radial-gradient(circle at 38% 30%, var(--chrome-hi), var(--chrome) 45%, var(--chrome-lo));
+    box-shadow: 0 2px 2px rgb(0 0 0 / 0.5), inset 0 -2px 3px rgb(0 0 0 / 0.25);
+    transition: translate 60ms, box-shadow 60ms;
+
+    &:active { translate: 0 1px; box-shadow: 0 1px 1px rgb(0 0 0 / 0.5), inset 0 -1px 2px rgb(0 0 0 / 0.25); }
+    &:focus-visible { outline: 2px solid var(--engrave); outline-offset: 3px; }
+  }
+
+  .plate {
+    position: relative;
+    margin-inline-start: auto;
+    padding: 6px 20px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, #d8cdb0, #bfb393);
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.15), 0 1px 0 rgb(255 255 255 / 0.5);
+    color: var(--engrave);
+    font: 600 8px/1 "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
+
+    .rivet { inline-size: 5px; block-size: 5px; margin-block-start: -2.5px; }
+    .rivet:first-child { inset-inline-start: 6px; }
+    .rivet:last-child { inset-inline-end: 6px; }
   }
 </style>
 </head>
 <body>
-<main id="controls"></main>
-<p class="version" id="version"></p>
+<main class="console" aria-label="Sputnik">
+  <span class="screw"></span><span class="screw"></span><span class="screw"></span><span class="screw"></span>
+
+  <div class="badge" aria-hidden="true"><span class="rivet"></span>SPUTNIK<span class="rivet"></span></div>
+
+  <div class="crt">
+    <div class="screen" id="screen">
+      <canvas class="trail" id="trail"></canvas>
+      <div class="satellite" id="satellite" tabindex="0" role="slider">
+        <svg viewBox="-12 -12 24 24" aria-hidden="true">
+          <g fill="none" stroke="currentColor" stroke-linecap="round">
+            <path d="M-4 2.5 L-21 9.5" stroke-width="1.1"/>
+            <path d="M-3 4 L-17.5 14.5" stroke-width="0.9"/>
+            <path d="M-5 -0.5 L-22.5 3" stroke-width="0.8"/>
+            <path d="M-1 5 L-11 19" stroke-width="1"/>
+          </g>
+          <circle r="7.5" fill="var(--glass)" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M-7 1.5 Q0 4 7 1" fill="none" stroke="currentColor" stroke-width="0.8"/>
+          <path d="M-4.2 -3 A5 5 0 0 1 1.8 -5.4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="xy-value" id="xy-value"></span>
+    </div>
+    <span class="label axis x" id="axis-x"></span>
+    <span class="label axis y" id="axis-y"></span>
+  </div>
+
+  <div class="side">
+    <div class="control" data-knob="mode" data-positions="Sputter Synth" style="--size: 58px"></div>
+    <div class="trims">
+      <div class="control" data-knob="crush" style="--size: 30px"></div>
+      <div class="control" data-knob="rate" style="--size: 30px"></div>
+      <div class="control" data-knob="crossover" data-label="Low" style="--size: 30px"></div>
+    </div>
+  </div>
+
+  <div class="knobs">
+    <div class="control" data-knob="fuzz" style="--size: 54px"></div>
+    <div class="control" data-knob="gate" style="--size: 54px"></div>
+    <div class="control" data-knob="synth" style="--size: 54px"></div>
+    <div class="control" data-knob="move" style="--size: 54px"></div>
+    <div class="control" data-knob="level" style="--size: 54px"></div>
+  </div>
+
+  <div class="footer">
+    <div class="stomp-wrap"><button class="stomp" id="stomp" aria-label="Stomp" aria-pressed="true"></button></div>
+    <span class="lamp" id="lamp"></span>
+    <span class="plate"><span class="rivet"></span>SPUTNIK-1 &nbsp;No. <span id="version"></span><span class="rivet"></span></span>
+  </div>
+</main>
 
 <script>
 (() => {
@@ -164,38 +486,40 @@
     ? (msg) => window.ipc.postMessage(JSON.stringify(msg))
     : mockBridge();
 
+  function watch(id, fn) {
+    if (!views.has(id)) views.set(id, []);
+    views.get(id).push(fn);
+  }
+
+  function render(id) {
+    const p = params.get(id);
+    if (p) views.get(id)?.forEach((fn) => fn(p));
+  }
+
   function setParam(id, value) {
     const p = params.get(id);
     if (!p) return;
     p.value = Math.min(1, Math.max(0, value));
     bridge({ type: "set", id, value: p.value });
-    views.get(id)?.(p);
+    render(id);
   }
 
-  function gesture(id, fn) {
-    bridge({ type: "begin", id });
+  function gesture(ids, fn) {
+    ids.forEach((id) => bridge({ type: "begin", id }));
     fn();
-    bridge({ type: "end", id });
+    ids.forEach((id) => bridge({ type: "end", id }));
   }
 
-  // ---------- controls ----------
+  // ---------- knobs ----------
 
-  function control(p, widget) {
-    const el = document.createElement("div");
-    el.className = "control";
-    const name = document.createElement("span");
-    name.className = "name";
-    name.textContent = p.name;
-    const text = document.createElement("span");
-    text.className = "text";
-    el.append(name, widget, text);
-    return { el, text };
-  }
+  function buildKnob(host) {
+    const id = host.dataset.knob;
+    const p = params.get(id);
+    const label = document.createElement("span");
+    label.className = "label";
+    label.textContent = host.dataset.label ?? p.name;
+    label.setAttribute("aria-hidden", "true");
 
-  function buildKnob(p) {
-    const id = p.id;
-    const dial = document.createElement("div");
-    dial.className = "dial";
     const knob = document.createElement("div");
     knob.className = "knob";
     knob.tabIndex = 0;
@@ -203,16 +527,53 @@
     knob.setAttribute("aria-label", p.name);
     knob.setAttribute("aria-valuemin", "0");
     knob.setAttribute("aria-valuemax", "1");
-    const pointer = document.createElement("div");
-    pointer.className = "pointer";
-    dial.append(knob, pointer);
-    const { el, text } = control(p, dial);
+    const positions = host.dataset.positions?.split(" ") ?? [];
+    const sweep = positions.length ? 90 : 270;
+    knob.style.setProperty("--sweep", `${sweep}deg`);
+    const angle = (n) => n * sweep - sweep / 2;
+    const size = parseFloat(host.style.getPropertyValue("--size"));
+    const marks = [];
+    if (positions.length) {
+      const radius = size / 2 + 18;
+      const ring = document.createElement("div");
+      ring.className = "positions";
+      positions.forEach((name, i) => {
+        const a = (angle(i / (positions.length - 1)) * Math.PI) / 180;
+        const mark = document.createElement("span");
+        mark.textContent = name.toUpperCase();
+        mark.style.left = `${Math.round(size / 2 + radius * Math.sin(a))}px`;
+        mark.style.top = `${Math.round(size / 2 - radius * Math.cos(a))}px`;
+        ring.append(mark);
+        marks.push(mark);
+      });
+      knob.append(ring);
+    } else if (size > 40) {
+      const ticks = document.createElement("div");
+      ticks.className = "ticks";
+      for (let i = 0; i <= 10; i++) {
+        const tick = document.createElement("i");
+        tick.style.rotate = `${angle(i / 10)}deg`;
+        if (i === 0 || i === 5 || i === 10) tick.className = "major";
+        ticks.append(tick);
+      }
+      knob.append(ticks);
+    }
+    for (const part of ["grip", "cap", "pointer", "gloss"]) {
+      const el = document.createElement("div");
+      el.className = part;
+      knob.append(el);
+    }
+    const value = document.createElement("span");
+    value.className = "value";
+    if (positions.length) host.append(knob, value);
+    else host.append(knob, label, value);
 
-    views.set(id, (p) => {
-      dial.style.setProperty("--turn", p.value.toFixed(4));
+    watch(id, (p) => {
+      knob.style.setProperty("--turn", p.value.toFixed(4));
       knob.setAttribute("aria-valuenow", p.value.toFixed(4));
       knob.setAttribute("aria-valuetext", p.text);
-      text.textContent = p.text;
+      value.textContent = p.text;
+      marks.forEach((mark, i) => mark.classList.toggle("on", i === Math.round(p.value * p.steps)));
     });
 
     const stepped = p.steps > 0;
@@ -223,14 +584,17 @@
       if (e.button !== 0) return;
       knob.setPointerCapture(e.pointerId);
       knob.focus();
+      host.classList.add("active");
       dragging.add(id);
       bridge({ type: "begin", id });
       let raw = p.value;
       let lastY = e.clientY;
+      let moved = false;
       const move = (ev) => {
         const fine = ev.shiftKey ? 0.15 : 1;
         raw = Math.min(1, Math.max(0, raw + ((lastY - ev.clientY) / 200) * fine));
         lastY = ev.clientY;
+        moved = true;
         const next = snap(raw);
         if (next !== p.value) setParam(id, next);
       };
@@ -238,7 +602,9 @@
         knob.removeEventListener("pointermove", move);
         knob.removeEventListener("pointerup", up);
         knob.removeEventListener("pointercancel", up);
+        host.classList.remove("active");
         dragging.delete(id);
+        if (!moved && stepped) setParam(id, p.value >= 1 ? 0 : snap(p.value + stepSize));
         bridge({ type: "end", id });
       };
       knob.addEventListener("pointermove", move);
@@ -246,7 +612,7 @@
       knob.addEventListener("pointercancel", up);
     });
 
-    knob.addEventListener("dblclick", () => gesture(id, () => setParam(id, p.default)));
+    knob.addEventListener("dblclick", () => gesture([id], () => setParam(id, p.default)));
 
     knob.addEventListener("keydown", (e) => {
       const dir = { ArrowUp: 1, ArrowRight: 1, ArrowDown: -1, ArrowLeft: -1 }[e.key];
@@ -254,41 +620,158 @@
       e.preventDefault();
       e.stopPropagation();
       const amount = stepped ? stepSize : stepSize * (e.shiftKey ? 10 : 1);
-      gesture(id, () => setParam(id, snap(p.value + dir * amount)));
+      gesture([id], () => setParam(id, snap(p.value + dir * amount)));
     });
 
     knob.addEventListener("wheel", (e) => {
       e.preventDefault();
       const dir = Math.sign(-e.deltaY);
       if (!dir) return;
-      gesture(id, () => setParam(id, snap(p.value + dir * (stepped ? stepSize : stepSize / 2))));
+      gesture([id], () => setParam(id, snap(p.value + dir * (stepped ? stepSize : stepSize / 2))));
     }, { passive: false });
-
-    return el;
   }
 
-  function buildSwitch(p) {
-    const id = p.id;
-    const button = document.createElement("button");
-    button.className = "switch";
-    button.setAttribute("role", "switch");
-    button.setAttribute("aria-label", p.name);
-    const { el, text } = control(p, button);
-    views.set(id, (p) => {
-      button.setAttribute("aria-checked", String(p.value >= 0.5));
-      text.textContent = p.text;
+  // ---------- XY pad ----------
+
+  // Sputter's X is the Gate knob, so dragging the satellite turns it.
+  const axes = { sputter: ["gate", "sag"], synth: ["cutoff", "resonance"] };
+  const TRAIL_SECONDS = 1.4;
+
+  function buildPad() {
+    const screen = document.getElementById("screen");
+    const satellite = document.getElementById("satellite");
+    const canvas = document.getElementById("trail");
+    const readout = document.getElementById("xy-value");
+    const axisX = document.getElementById("axis-x");
+    const axisY = document.getElementById("axis-y");
+    const ctx = canvas.getContext("2d");
+    const trail = [];
+    let frame = 0;
+
+    const current = () => axes[params.get("mode").value >= 0.5 ? "synth" : "sputter"];
+
+    function draw() {
+      const { width, height } = canvas;
+      const now = performance.now() / 1000;
+      while (trail.length && now - trail[0].t > TRAIL_SECONDS) trail.shift();
+      ctx.clearRect(0, 0, width, height);
+      ctx.lineCap = "round";
+      ctx.shadowColor = "rgb(125 255 154)";
+      ctx.shadowBlur = 8;
+      for (let i = 1; i < trail.length; i++) {
+        const a = trail[i - 1];
+        const b = trail[i];
+        const life = 1 - (now - b.t) / TRAIL_SECONDS;
+        ctx.strokeStyle = `rgb(125 255 154 / ${(life * 0.7).toFixed(2)})`;
+        ctx.lineWidth = (1 + life * 2.5) * devicePixelRatio;
+        ctx.beginPath();
+        ctx.moveTo(a.x * width, (1 - a.y) * height);
+        ctx.lineTo(b.x * width, (1 - b.y) * height);
+        ctx.stroke();
+      }
+      frame = trail.length > 1 ? requestAnimationFrame(draw) : 0;
+    }
+
+    function place() {
+      const [xId, yId] = current();
+      const x = params.get(xId);
+      const y = params.get(yId);
+      satellite.style.setProperty("--x", x.value.toFixed(4));
+      satellite.style.setProperty("--y", y.value.toFixed(4));
+      satellite.setAttribute("aria-label", `${x.name} and ${y.name}`);
+      satellite.setAttribute("aria-valuetext", `${x.name} ${x.text}, ${y.name} ${y.text}`);
+      readout.textContent = `${x.name} ${x.text} · ${y.name} ${y.text}`;
+      axisX.textContent = `${x.name} →`;
+      axisY.textContent = `${y.name} →`;
+      const last = trail.at(-1);
+      if (!last || Math.hypot(last.x - x.value, last.y - y.value) > 0.004) {
+        trail.push({ x: x.value, y: y.value, t: performance.now() / 1000 });
+        if (!frame) frame = requestAnimationFrame(draw);
+      }
+    }
+
+    function resize() {
+      canvas.width = Math.round(screen.clientWidth * devicePixelRatio);
+      canvas.height = Math.round(screen.clientHeight * devicePixelRatio);
+    }
+    resize();
+
+    let pending = false;
+    const schedule = () => {
+      if (pending) return;
+      pending = true;
+      queueMicrotask(() => { pending = false; place(); });
+    };
+    for (const id of ["mode", ...axes.sputter, ...axes.synth]) watch(id, schedule);
+    watch("mode", () => { trail.length = 0; });
+
+    function setFrom(e) {
+      const rect = screen.getBoundingClientRect();
+      const [xId, yId] = current();
+      setParam(xId, (e.clientX - rect.left) / rect.width);
+      setParam(yId, 1 - (e.clientY - rect.top) / rect.height);
+    }
+
+    screen.addEventListener("pointerdown", (e) => {
+      if (e.button !== 0) return;
+      const ids = current();
+      screen.setPointerCapture(e.pointerId);
+      satellite.focus();
+      screen.classList.add("active");
+      trail.length = 0;
+      ids.forEach((id) => { dragging.add(id); bridge({ type: "begin", id }); });
+      setFrom(e);
+      const move = (ev) => setFrom(ev);
+      const up = () => {
+        screen.removeEventListener("pointermove", move);
+        screen.removeEventListener("pointerup", up);
+        screen.removeEventListener("pointercancel", up);
+        screen.classList.remove("active");
+        ids.forEach((id) => { dragging.delete(id); bridge({ type: "end", id }); });
+      };
+      screen.addEventListener("pointermove", move);
+      screen.addEventListener("pointerup", up);
+      screen.addEventListener("pointercancel", up);
     });
-    button.addEventListener("click", () => gesture(id, () => setParam(id, p.value >= 0.5 ? 0 : 1)));
-    return el;
+
+    screen.addEventListener("dblclick", () => {
+      const ids = current();
+      gesture(ids, () => ids.forEach((id) => setParam(id, params.get(id).default)));
+    });
+
+    satellite.addEventListener("keydown", (e) => {
+      const step = { ArrowRight: [0, 1], ArrowLeft: [0, -1], ArrowUp: [1, 1], ArrowDown: [1, -1] }[e.key];
+      if (!step) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const id = current()[step[0]];
+      gesture([id], () => setParam(id, params.get(id).value + step[1] * (e.shiftKey ? 0.1 : 0.01)));
+    });
   }
 
-  // Two-step parameters (bools and two-option enums) become switches,
-  // everything else a knob. Replace this with a hand-laid page once the
-  // plugin's controls settle.
+  // ---------- stomp ----------
+
+  function buildStomp() {
+    const button = document.getElementById("stomp");
+    const lamp = document.getElementById("lamp");
+    watch("stomp", (p) => {
+      const on = p.value >= 0.5;
+      lamp.classList.toggle("on", on);
+      button.setAttribute("aria-pressed", String(on));
+    });
+    button.addEventListener("click", () => gesture(["stomp"], () => setParam("stomp", params.get("stomp").value >= 0.5 ? 0 : 1)));
+  }
+
+  let built = false;
+
   function build() {
-    const root = document.getElementById("controls");
-    root.replaceChildren(...[...params.values()].map((p) => p.steps === 1 ? buildSwitch(p) : buildKnob(p)));
-    for (const p of params.values()) views.get(p.id)?.(p);
+    if (!built) {
+      document.querySelectorAll("[data-knob]").forEach(buildKnob);
+      buildPad();
+      buildStomp();
+      built = true;
+    }
+    for (const id of params.keys()) render(id);
   }
 
   // ---------- messages ----------
@@ -310,8 +793,7 @@
       case "key": return forwardKey(msg);
       case "init":
         document.getElementById("version").textContent = `v${msg.version}`;
-        params.clear();
-        msg.params.forEach((p) => params.set(p.id, { ...p, value: p.default, text: "" }));
+        if (!built) msg.params.forEach((p) => params.set(p.id, { ...p, value: p.default, text: "" }));
         build();
         return;
       case "values":
@@ -320,7 +802,7 @@
           if (!p) continue;
           p.text = text;
           if (!dragging.has(id)) p.value = value;
-          views.get(id)?.(p);
+          render(id);
         }
         return;
     }

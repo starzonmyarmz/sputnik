@@ -58,8 +58,10 @@ Settled with the user; keep to it.
   bakelite knobs with engraved labels, and a round green phosphor CRT
   that is the XY pad.
 - Controls: Fuzz, Gate, Synth, Move, Level, in plain words (themed names
-  were turned down). A two-position rotary selector, SPUTTER / SYNTH. A
-  metal `stomp` switch at the bottom, on by default, with a red lamp.
+  were turned down). A two-position rotary selector, SPUTTER / SYNTH,
+  above three small trims: Crush, Rate and Low (the Crossover
+  parameter). A metal `stomp` switch at the bottom, on by default, with
+  a red lamp.
 - The XY pad turns the knobs. In Sputter, X is the Gate knob (dragging
   turns it) and Y is sag, which has no knob. In Synth, X is the filter
   cutoff and Y its resonance, neither with a knob.
@@ -70,9 +72,10 @@ Settled with the user; keep to it.
   engraving #5b5345. Green belongs to the CRT and red to the lamp only.
 - Art: the satellite is the XY pad's handle and leaves a fading phosphor
   trail as it's dragged. Nothing else animates.
-- Wordmark font: not chosen yet. Render SPUTNIK in three or four
-  stencil or space-age display faces on the real badge and let the user
-  pick.
+- Wordmark: Stardos Stencil Bold, cream on a riveted black bakelite
+  badge. Only the SPUTNIK glyphs are embedded; re-subset from
+  `ui/fonts/StardosStencil-Bold.ttf` if the wordmark's letters change.
+  Labels are engraved small caps in Helvetica Neue.
 
 ## Editor
 
