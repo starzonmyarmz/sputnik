@@ -1,111 +1,108 @@
-# Plugin template
+# Sputnik
 
-Read `README.md` first for the layout, the rename checklist, building,
-tests and the editor. This file has what plugins made from the template
-learned the hard way. History and reasoning live in the Keep Up idea
-"VST/CLAP Plugin development idea and log" (`keepup idea show 54`). Add a
-section there when a plugin is started or ships, and a "Gotchas from
-<plugin>" list for anything new.
+Read `README.md` first for what the plugin does and how to build and run
+it. This file has the maintainer details it leaves out. The plan and its
+reasoning live in the Keep Up idea "Sputnik: synth fuzz pedal"
+(`keepup idea show 66`).
 
-Plugins made from it so far: Halfwit (octave-divider bass splitter),
-Ghosted (drifting ADT/slapback) and Altitude (stacked octaves, with
-presets in the editor). When something here is unclear, look at
-how they did it.
+## Layout
 
-## Starting a plugin
+- `plugin/src/engine.rs`: all DSP, with no plugin framework types, so tests
+  drive it directly.
+- `plugin/src/lib.rs`: host parameters and plumbing.
+- `plugin/src/editor.rs` and `plugin/src/bridge.rs`: nothing specific to
+  Sputnik. The page's size and HTML come from `PAGE` in `lib.rs`, and the
+  bridge works with any `#[derive(Params)]` struct.
+- `ui/index.html`: the whole editor, compiled into the plugin, with a mock
+  bridge for running it in a browser.
 
-- Create the repo on GitHub from the template, so it's linked:
-  `gh repo create starzonmyarmz/<name> --public --template starzonmyarmz/plugin-template`,
-  then clone it. A repo can only get that link when it's created. If the
-  command is blocked, ask the user to approve or run it rather than
-  copying the template locally.
-- Do the README's rename checklist as its own commit ("Rename the
-  template to <Name>"), then grep for `example` and `Example` to catch
-  anything it missed.
-- Give the plugin its own `CLAUDE.md`, based on Halfwit's or Ghosted's:
-  layout, where a new parameter has to go, golden renders, window size,
-  screenshot and releases.
+A new parameter goes in `SputnikParams` in `lib.rs`, the engine's
+setters in `engine.rs`, and the mock's `specs` in `ui/index.html`.
 
-## Skills
+## Sound changes and golden renders
 
-`.claude/skills` has the routines plugins repeat. Use them rather than
-working from memory:
-
-- `design-kickoff`: settle the look before building the editor.
-- `screenshot`: retake `docs/<name>.jpg` after a visible UI change.
-- `port-jsfx`: port a JSFX prototype, cross-checked and locked in.
-- `bless-goldens`: rewrite golden renders, and have the user listen
-  before committing.
-
-If a plugin is ported from a JSFX, never mention the JSFX in its repo:
-not in the README, CLAUDE.md, code, comments, test names or parameter
-tables, and not in commit messages.
+`plugin/tests/golden` holds renders the tests compare against. After an
+intended change to the sound, rerun with `BLESS=1 cargo test` to rewrite
+them. Never commit rewritten renders until the user has listened to
+them, and say in the commit what changed in the sound.
 
 ## Things clap-validator catches
 
-Run `scripts/clap-validator.sh` after any DSP change, not just in CI.
+Run `scripts/clap-validator.sh target/bundled/Sputnik.clap` after any
+DSP change, not just in CI.
 
-- Subnormal output. Recursive filters, envelopes and smoothers decay into
-  subnormals in silence. Flush state and output below about 1e-30 to zero.
-- nice-plug's `v2s_f32_hz_then_khz` already appends Hz/kHz, so adding
-  `with_unit(" Hz")` too doubles it. `v2s_f32_gain_to_db` and
-  `v2s_f32_percentage` don't append their unit, so `with_unit` is right
-  with those.
-- NaN from filters whose corner frequency is above Nyquist at low sample
-  rates. Clamp corners below Nyquist.
+- Subnormal output. The filter, envelope follower, sag and smoothers
+  decay into subnormals in silence. Flush state and output below about
+  1e-30 to zero.
+- NaN from a filter corner above Nyquist at low sample rates. Clamp
+  corners below Nyquist.
+- `v2s_f32_hz_then_khz` already appends Hz/kHz, so don't add
+  `with_unit(" Hz")`. `v2s_f32_percentage` doesn't append `%`, so
+  `with_unit("%")` is right with it.
+
+## Sound
+
+- Two modes: Sputter (gated, choked square fuzz, with a stutter gate
+  synced to host tempo and a fixed rate when there's none) and Synth (fuzz
+  into a resonant filter swept by an envelope follower).
+- A pitch-tracked square/saw oscillator is blended in with Synth. When
+  tracking fails on chords, noise or slides, its glitches are kept on
+  purpose. Don't smooth or duck them.
+- A clean low-end crossover sits in front, so bass keeps its weight.
 
 ## Design
 
-Follow the README's design principles, and use the `design-kickoff`
-skill before building. Effects get the footswitch unless the user says
-otherwise.
+Settled with the user; keep to it.
+
+- Object: a 1957 mission control console. Cream enamel panel, black
+  bakelite knobs with engraved labels, and a round green phosphor CRT
+  that is the XY pad.
+- Controls: Fuzz, Gate, Synth, Move, Level, in plain words (themed names
+  were turned down). A two-position rotary selector, SPUTTER / SYNTH. A
+  metal `stomp` switch at the bottom, on by default, with a red lamp.
+- The XY pad turns the knobs. In Sputter, X is the Gate knob (dragging
+  turns it) and Y is sag, which has no knob. In Synth, X is the filter
+  cutoff and Y its resonance, neither with a knob.
+- Version: a small riveted, engraved ID plate in a bottom corner,
+  `SPUTNIK-1  No. v1.0.0`.
+- Palette: cream enamel panel #e9e0c9, black bakelite #2b2a27, green
+  phosphor #7dff9a on CRT glass #0d1a12, red lamp #ff3b2f, warm grey
+  engraving #5b5345. Green belongs to the CRT and red to the lamp only.
+- Art: the satellite is the XY pad's handle and leaves a fading phosphor
+  trail as it's dragged. Nothing else animates.
+- Wordmark font: not chosen yet. Render SPUTNIK in three or four
+  stencil or space-age display faces on the real badge and let the user
+  pick.
 
 ## Editor
 
 - The window size is set in `PAGE.size` in `lib.rs` and by the page's
   outer element in `ui/index.html`. Change them together.
-- Work on the page in a browser against the mock (see the README). The
-  preview server gets cached: add `?v=N` after each edit. Keep the mock's
-  `specs` in step with the plugin's parameters, including the skew of any
-  skewed range.
-- SVG reused through `<use>` doesn't get page CSS rules. To style its
-  parts, stamp it from a `<template>` instead, or put attributes on the
-  elements themselves.
+- The local preview server gets cached by the browser. Add `?v=N` after
+  each edit. Keep the mock's `specs` in step with the plugin's
+  parameters, including the skew of any skewed range.
 - Fonts can't load from the network: embed them as base64 `@font-face`
-  data URLs, and keep the file and its license in `ui/fonts`. For a
-  wordmark, Google Fonts' css2 API with `&text=<glyphs>` returns a subset
-  of a few KB.
-- Before relying on a newer CSS feature, check it's in Safari's WebKit
-  for the macOS versions you support. The macOS webview is the system
-  WKWebView; Windows uses WebView2 (current Chromium).
-- After a visible UI change, retake `docs/<name>.jpg` with the
-  `screenshot` skill. The Screenshot workflow also retakes it on main,
-  but it can't update the README's `alt` text.
+  data URLs, and keep the file and its license in `ui/fonts`.
+- Check that newer CSS features are in the macOS WKWebView before
+  relying on them.
+- After a visible UI change, retake `docs/sputnik.jpg` with the
+  `screenshot` skill.
 
 ## Testing in REAPER
 
 - `scripts/install.sh` installs into `~/Library/Audio/Plug-Ins`. REAPER
   keeps a plugin's dylib loaded, so restart it after reinstalling.
 - REAPER only monitors input on armed tracks.
-- Multi-output plugins: declare a second layout without the aux port so
-  hosts without multi-out still load them, and keep a scratch buffer for
-  the aux signal in that case (see Halfwit).
+
+## Releases
+
+`release.yml` runs on `vX.Y.Z` tags, which must match `version` in the
+root `Cargo.toml`. To release: bump `version`, commit, then
+`git tag vX.Y.Z && git push origin main vX.Y.Z`.
 
 ## nice-plug fork
 
-Plugins pin the `patina` branch of
-[starzonmyarmz/nice-plug](https://github.com/starzonmyarmz/nice-plug/tree/patina):
-upstream nice-plug plus one commit (`d1f60d2`) that adds
-`ActivateContext::gui_context()`, so a hardware controller can set
-parameters before the editor has opened. Patina relies on it for its
-MiniLab knobs. Keep the fork to that one commit: anything else on the
-branch has to be carried through every rebase.
-
-- Upgrading: rebase `patina` onto upstream, push, and bump the `rev` in
-  every repo that pins it (`plugin/` and `xtask/` `Cargo.toml`, plus
-  `app/` in Patina). Then run the tests and clap-validator in each.
-- Don't send the patch upstream as a PR. It was written with AI, and
-  nice-plug's [AI policy](https://rust.audio/community/ai/) doesn't
-  accept AI-written code, PR descriptions or comments. If the need
-  should be raised, the user writes an issue by hand that describes only
-  the use case.
+The plugin is pinned to the `patina` branch of a nice-plug fork, which
+adds `ActivateContext::gui_context()`. To upgrade, rebase that branch onto
+upstream, push it, and update the `rev` in both `plugin/Cargo.toml` and
+`xtask/Cargo.toml`.
