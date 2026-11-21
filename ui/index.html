@@ -331,8 +331,27 @@
   // Mirrors the plugin's parameters so the page can be worked on in a
   // browser. Keep it in step with params when they change.
   function mockBridge() {
+    const modes = ["Sputter", "Synth"];
+    const rates = ["1/4", "1/8", "1/8T", "1/16", "1/16T"];
+    const percent = (n) => `${Math.round(n * 100)}%`;
+    const hz = (min, max) => (n) => {
+      const v = min + (max - min) * n ** 4;
+      return v < 1000 ? `${Math.round(v)} Hz` : `${(v / 1000).toFixed(1)} kHz`;
+    };
     const specs = [
-      { id: "gain", name: "Gain", steps: 0, default: 0.5, text: (n) => `${(n * 60 - 30).toFixed(2)} dB` },
+      { id: "mode", name: "Mode", steps: 1, default: 0, options: modes, text: (n) => modes[Math.round(n)] },
+      { id: "fuzz", name: "Fuzz", steps: 0, default: 0.6, text: percent },
+      { id: "gate", name: "Gate", steps: 0, default: 0.3, text: percent },
+      { id: "synth", name: "Synth", steps: 0, default: 0, text: percent },
+      { id: "move", name: "Move", steps: 0, default: 0, text: percent },
+      { id: "level", name: "Level", steps: 0, default: 2 / 3, text: (n) => `${(n * 36 - 24).toFixed(1)} dB` },
+      { id: "sag", name: "Sag", steps: 0, default: 0.3, text: percent },
+      { id: "cutoff", name: "Cutoff", steps: 0, default: 0.542, text: hz(60, 4000) },
+      { id: "resonance", name: "Resonance", steps: 0, default: 0.4, text: percent },
+      { id: "crush", name: "Crush", steps: 0, default: 0, text: percent },
+      { id: "rate", name: "Rate", steps: 4, default: 0.75, options: rates, text: (n) => rates[Math.round(n * 4)] },
+      { id: "crossover", name: "Crossover", steps: 0, default: 0.63, text: hz(20, 400) },
+      { id: "stomp", name: "Stomp", steps: 1, default: 1, options: ["Off", "On"], text: (n) => n >= 0.5 ? "On" : "Off" },
     ];
     const version = new URLSearchParams(location.search).get("version") ?? "0.0.0";
     const values = Object.fromEntries(specs.map((s) => [s.id, s.default]));
