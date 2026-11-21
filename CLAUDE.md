@@ -89,7 +89,7 @@ Settled with the user; keep to it.
   data URLs, and keep the file and its license in `ui/fonts`.
 - Check that newer CSS features are in the macOS WKWebView before
   relying on them.
-- After a visible UI change, retake `docs/sputnik.jpg` with the
+- After a visible UI change, retake `docs/sputnik.png` with the
   `screenshot` skill.
 
 ## Testing in REAPER

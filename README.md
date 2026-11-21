@@ -1,6 +1,6 @@
 # Sputnik
 
-<img src="docs/sputnik.jpg" width="555" alt="Sputnik, a cream enamel mission-control console with a stencilled SPUTNIK badge, a green phosphor oscilloscope showing the output, a Sputter/Synth selector with tone, peak, crush, rate and low trims, a row of fuzz, gate, sag, synth, move and level bakelite knobs, a centred footswitch with a red lamp, and a riveted ID plate">
+<img src="docs/sputnik.png" width="555" alt="Sputnik, a cream enamel mission-control console with a stencilled SPUTNIK badge, a green phosphor oscilloscope showing the output, a Sputter/Synth selector with tone, peak, crush, rate and low trims, a row of fuzz, gate, sag, synth, move and level bakelite knobs, a centred footswitch with a red lamp, and a riveted ID plate">
 
 A digital synth fuzz for guitar and bass, as a VST3 and CLAP plugin for
 macOS and Windows. A square-wave fuzz that chokes and sputters, with an
@@ -55,7 +55,7 @@ before starting the host.
   Windows bundle, validates both, and publishes `Sputnik-X.Y.Z.zip`
   with `INSTALL.txt`.
 - `screenshot.yml` runs on pushes to main that touch `ui/`, the version
-  or `plugin/src/lib.rs`. It retakes `docs/sputnik.jpg` with
+  or `plugin/src/lib.rs`. It retakes `docs/sputnik.png` with
   `scripts/screenshot.sh`, sets its width in the README, and commits both
   if the image changed.
 
