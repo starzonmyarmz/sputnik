@@ -108,7 +108,7 @@ impl Plugin for Sputnik {
 }
 
 impl ClapPlugin for Sputnik {
-    const CLAP_ID: &'static str = "com.danmarino.sputnik";
+    const CLAP_ID: &'static str = "com.iamdanielmarino.sputnik";
     const CLAP_DESCRIPTION: Option<&'static str> = Some("A synth fuzz");
     const CLAP_MANUAL_URL: Option<&'static str> = None;
     const CLAP_SUPPORT_URL: Option<&'static str> = None;

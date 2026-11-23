@@ -1,6 +1,6 @@
 _commit: 9f85794
 _src_path: gh:starzonmyarmz/project-kit
-app_id: com.danmarino.sputnik
+app_id: com.iamdanielmarino.sputnik
 author: Daniel Marino
 description: 'A sputtering synth fuzz for guitar and bass, with an oscilloscope: a
     VST3 and CLAP plugin'
