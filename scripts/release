@@ -78,10 +78,12 @@ case $bump in
 esac
 
 git rev-parse -q --verify "refs/tags/v$next" >/dev/null && die "v$next already exists"
+[[ $(printf '%s\n%s\n' "${current%%-*}" "$next" | sort -V | head -1) == "${current%%-*}" ]] ||
+  die "$next is lower than the current version, $current"
 
 unreleased=$(awk '/^## \[Unreleased\]/ { on = 1; next } /^## \[/ { on = 0 } on' CHANGELOG.md)
 if [[ -n $computed ]]; then
-  grep -q '^- ' <<<"$unreleased" || die "CHANGELOG.md has nothing under [Unreleased]; run /changelog or add the lines by hand"
+  grep -q '^- ' <<<"$unreleased" || die "CHANGELOG.md has nothing under [Unreleased]; run /pk-changelog or add the lines by hand"
 fi
 
 echo "$current -> $next ($bump${computed:+, commits say $computed})"
