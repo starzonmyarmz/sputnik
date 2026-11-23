@@ -108,7 +108,8 @@ mod tests {
     fn frames_start_on_a_rising_crossing() {
         let scope = Scope::new();
         let mut writer = ScopeWriter::new(scope.clone(), 48_000.0);
-        let wave: Vec<f32> = (0..48_000).map(|i| (i as f32 * 110.0 / 48_000.0 * std::f32::consts::TAU + 1.0).sin()).collect();
+        let wave: Vec<f32> =
+            (0..48_000).map(|i| (i as f32 * 110.0 / 48_000.0 * std::f32::consts::TAU + 1.0).sin()).collect();
         writer.push(&wave);
         assert!(scope.frames() > 10);
         let points = scope.points();

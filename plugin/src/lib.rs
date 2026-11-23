@@ -112,7 +112,8 @@ impl ClapPlugin for Sputnik {
     const CLAP_DESCRIPTION: Option<&'static str> = Some("A synth fuzz");
     const CLAP_MANUAL_URL: Option<&'static str> = None;
     const CLAP_SUPPORT_URL: Option<&'static str> = None;
-    const CLAP_FEATURES: &'static [ClapFeature] = &[ClapFeature::AudioEffect, ClapFeature::Distortion, ClapFeature::Stereo];
+    const CLAP_FEATURES: &'static [ClapFeature] =
+        &[ClapFeature::AudioEffect, ClapFeature::Distortion, ClapFeature::Stereo];
 }
 
 impl Vst3Plugin for Sputnik {
