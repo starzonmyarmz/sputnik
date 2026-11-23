@@ -69,5 +69,5 @@ before starting the host.
 - [nice-plug](https://codeberg.org/RustAudio/nice-plug), pinned to
   [a fork](https://github.com/starzonmyarmz/nice-plug/tree/patina) that
   adds `ActivateContext::gui_context()`.
-- Started from
-  [plugin-template](https://github.com/starzonmyarmz/plugin-template).
+- Set up with
+  [project-kit](https://github.com/starzonmyarmz/project-kit).
