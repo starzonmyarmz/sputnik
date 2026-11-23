@@ -30,8 +30,9 @@ messages. Describe the plugin on its own terms.
 3. **Lock it in** with golden renders in `plugin/tests/engine.rs`, using
    the `bless-goldens` skill.
 4. **Map the front panel.** If the panel has fewer knobs than the JSFX
-   has sliders, map knobs to `Settings` in a separate step and commit,
-   so the engine itself can still be compared with the JSFX.
+   has sliders, add a `Controls` struct whose `settings()` maps knobs
+   to `Settings` (see Ghosted), in a separate step and commit, so the
+   engine itself can still be compared with the JSFX.
 5. **Add what the JSFX lacks**, each as its own commit:
    - glides on parameters that click when moved
    - slew limits on modulated delay times (an unlimited glide can read

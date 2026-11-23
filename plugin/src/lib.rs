@@ -14,7 +14,10 @@ static PAGE: editor::Page = editor::Page {
     title: "Sputnik",
     size: (600, 460),
     html: include_str!("../../ui/index.html"),
-    version: env!("CARGO_PKG_VERSION"),
+    version: match option_env!("PLUGIN_VERSION") {
+        Some(version) => version,
+        None => env!("CARGO_PKG_VERSION"),
+    },
     background: (233, 224, 201, 255),
     dev_url_var: "SPUTNIK_UI_URL",
 };
