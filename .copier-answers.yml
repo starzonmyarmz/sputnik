@@ -1,4 +1,4 @@
-_commit: 7e6bcdf
+_commit: 9f85794
 _src_path: gh:starzonmyarmz/project-kit
 app_id: com.danmarino.sputnik
 author: Daniel Marino
@@ -13,6 +13,7 @@ public: true
 ships:
 - github-release
 stack: vst-plugin
+starter: false
 voice_doc: false
 vst3_class_id: SputnikDanMarino
 year: 2026
