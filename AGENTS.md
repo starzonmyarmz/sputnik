@@ -29,7 +29,7 @@ Work on the editor in a browser against the mock: `cd ui && python3 -m http.serv
 - `plugin/src/lib.rs`: host plumbing, plugin IDs and `PAGE` (title, window size, version).
 - `plugin/src/scope.rs`: captures the output on the audio thread for the oscilloscope, and the editor's feed sends each new frame.
 - `plugin/src/editor.rs`, `bridge.rs`: the webview editor and its message bridge. Nothing in them is specific to Sputnik. Don't add another channel to `editor.rs`; use `WebEditor::with_feed`.
-- `plugin/tests/`: engine tests, golden renders in `golden/` and real DI recordings in `di/`.
+- `plugin/tests/`: engine tests, golden renders in `golden/` and real DI recordings in `di/`. `support/` has the WAV and golden helpers.
 - `ui/index.html`: the whole editor, compiled into the plugin, with a hand-written mock bridge (`mockBridge()`) for running it in a browser.
 
 A new parameter goes in `SputnikParams` in `params.rs`, the engine's `Settings` in `engine.rs`, and the mock's `specs` in `ui/index.html`.
