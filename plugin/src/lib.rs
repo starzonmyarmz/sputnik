@@ -43,7 +43,7 @@ impl Default for Sputnik {
 
 impl Plugin for Sputnik {
     const NAME: &'static str = "Sputnik";
-    const VENDOR: &'static str = "Dan Marino";
+    const VENDOR: &'static str = "Daniel Marino";
     const URL: &'static str = "";
     const EMAIL: &'static str = "";
     const VERSION: &'static str = env!("CARGO_PKG_VERSION");
@@ -117,7 +117,7 @@ impl ClapPlugin for Sputnik {
 }
 
 impl Vst3Plugin for Sputnik {
-    const VST3_CLASS_ID: [u8; 16] = *b"SputnikDanMarino";
+    const VST3_CLASS_ID: [u8; 16] = *b"SputnikDanielMar";
     const VST3_SUBCATEGORIES: &'static [Vst3SubCategory] = &[Vst3SubCategory::Fx, Vst3SubCategory::Distortion];
 }
 
