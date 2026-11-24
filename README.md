@@ -1,6 +1,6 @@
 # Sputnik
 
-A sputtering synth fuzz for guitar and bass, with an oscilloscope: a VST3 and CLAP plugin.
+A sputtering synth fuzz for guitar and bass, with an oscilloscope: a VST3 and CLAP plugin
 
 <img src="docs/sputnik.png" width="555" alt="Sputnik, a cream enamel mission-control console with a stencilled SPUTNIK badge, a green phosphor oscilloscope showing the output, a Sputter/Synth selector with tone, peak, crush, rate and low trims, a row of fuzz, gate, sag, synth, move and level bakelite knobs, a centred footswitch with a red lamp, and a riveted ID plate">
 
