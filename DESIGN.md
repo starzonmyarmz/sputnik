@@ -29,6 +29,7 @@ Settled with the user; keep to it.
 - **Palette:** see Tokens. Green belongs to the CRT and red to the lamp only.
 - **Wordmark font:** Stardos Stencil Bold, cream on a riveted black bakelite badge. Only the SPUTNIK glyphs are embedded; re-subset from `ui/fonts/StardosStencil-Bold.ttf` if the wordmark's letters change. Labels are engraved small caps in Helvetica Neue.
 - **Controls:** Fuzz, Gate, Sag, Synth, Move, Level, in plain words (themed names were turned down). A two-position rotary selector, SPUTTER / SYNTH, above two rows of small trims: Tone and Peak (Cutoff and Resonance), then Crush, Rate and Low (Crossover). Every parameter has its own knob: nothing a real pedal couldn't do, so no XY pad or dragging on the screen. A centred metal `stomp` switch at the bottom, on by default, with a red lamp beside it.
+- **Presets:** a small chrome-button stepper in the footer's left corner: two round buttons either side of a recessed bakelite window with the preset's name in engraved small caps, and an engraved PRESET label under it. It reads CUSTOM, dimmed, once any knob moves off a preset. Presets are factory-only, defined in `plugin/src/presets.rs`, and choosing one just sets the knobs.
 - **Version placement:** a small riveted, engraved ID plate in a bottom corner, `SPUTNIK-1  No. v1.0.0`.
 - **Art:** the CRT shows the real output as a triggered oscilloscope trace with phosphor persistence, flat in silence. Nothing else animates.
 
