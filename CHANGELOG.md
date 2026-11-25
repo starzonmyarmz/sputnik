@@ -4,6 +4,9 @@ What changed for people using Sputnik, newest first. Code-only work stays in the
 
 ## [Unreleased]
 
+### Added
+- Eight factory presets, from Machine Gun and Dying Battery to Bass Rocket and Wah Lead. Step through them with the arrows beside the footswitch, or click the name. Move any knob and it reads Custom.
+
 ## [0.1.1] - 2026-11-23
 
 ### Added

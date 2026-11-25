@@ -2,12 +2,14 @@ mod bridge;
 mod editor;
 pub mod engine;
 pub mod params;
+pub mod presets;
 pub mod scope;
 
 use engine::{Engine, Transport};
 use nice_plug::prelude::*;
 use params::SputnikParams;
 use scope::{Scope, ScopeWriter};
+use serde_json::json;
 use std::sync::Arc;
 
 static PAGE: editor::Page = editor::Page {
@@ -63,7 +65,12 @@ impl Plugin for Sputnik {
     }
 
     fn editor(&mut self, _executor: AsyncExecutor<Self>) -> Option<Self::Editor> {
-        Some(editor::WebEditor::new(&PAGE, self.params.clone()).with_feed(scope::feed(self.scope.clone())))
+        let presets = presets::describe(|s| self.params.normalized(s));
+        Some(
+            editor::WebEditor::new(&PAGE, self.params.clone())
+                .with_init(json!({ "presets": presets }))
+                .with_feed(scope::feed(self.scope.clone())),
+        )
     }
 
     fn activate(

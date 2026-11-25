@@ -10,15 +10,17 @@ pub struct Bridge {
     /// Keeps the params alive for the pointers below.
     _params: Arc<dyn Params>,
     version: &'static str,
+    /// More fields for the `init` message.
+    init: Value,
     entries: Vec<(String, ParamPtr)>,
     sent: Vec<f32>,
 }
 
 impl Bridge {
-    pub fn new(params: Arc<dyn Params>, version: &'static str) -> Self {
+    pub fn new(params: Arc<dyn Params>, version: &'static str, init: Value) -> Self {
         let entries: Vec<_> = params.param_map().into_iter().map(|(id, ptr, _group)| (id, ptr)).collect();
         let sent = vec![f32::NAN; entries.len()];
-        Self { _params: params, version, entries, sent }
+        Self { _params: params, version, init, entries, sent }
     }
 
     fn find(&self, msg: &Value) -> Option<ParamPtr> {
@@ -31,7 +33,11 @@ impl Bridge {
         match (msg["type"].as_str().unwrap_or_default(), ptr) {
             ("ready", _) => {
                 self.sent.fill(f32::NAN);
-                out.push(json!({ "type": "init", "version": self.version, "params": self.describe() }));
+                let mut init = json!({ "type": "init", "version": self.version, "params": self.describe() });
+                if let (Some(init), Some(extra)) = (init.as_object_mut(), self.init.as_object()) {
+                    init.extend(extra.clone());
+                }
+                out.push(init);
             }
             ("begin", Some(ptr)) => unsafe { context.raw_begin_set_parameter(ptr) },
             ("set", Some(ptr)) => {

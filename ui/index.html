@@ -336,6 +336,58 @@
     align-items: center;
   }
 
+  /* ---------- presets ---------- */
+
+  .presets {
+    justify-self: start;
+    display: grid;
+    grid-template-columns: auto 104px auto;
+    grid-template-areas: "prev name next" "label label label";
+    align-items: center;
+    column-gap: 6px;
+    row-gap: 5px;
+    justify-items: center;
+
+    &[hidden] { display: none; }
+    .label { grid-area: label; }
+  }
+
+  .preset-name {
+    grid-area: name;
+    inline-size: 100%;
+    padding: 6px 4px;
+    border-radius: 3px;
+    background: linear-gradient(180deg, var(--bakelite-lo), var(--bakelite));
+    box-shadow: inset 0 1px 3px rgb(0 0 0 / 0.7), 0 1px 0 rgb(255 255 255 / 0.6);
+    color: var(--enamel);
+    font: 600 9px/1 "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &.custom { color: var(--chrome-lo); }
+    &:focus-visible { outline: 2px solid var(--engrave); outline-offset: 2px; }
+  }
+
+  .preset-step {
+    inline-size: 20px;
+    block-size: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    background: radial-gradient(circle at 38% 30%, var(--chrome-hi), var(--chrome) 45%, var(--chrome-lo));
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.5), inset 0 -1px 2px rgb(0 0 0 / 0.25);
+    transition: translate 60ms;
+    color: var(--engrave);
+    font: 700 8px/1 "Helvetica Neue", Arial, sans-serif;
+
+    &:active { translate: 0 1px; }
+    &:focus-visible { outline: 2px solid var(--engrave); outline-offset: 2px; }
+    &.prev { grid-area: prev; }
+    &.next { grid-area: next; }
+  }
+
   .stomp-group {
     grid-column: 2;
     position: relative;
@@ -436,6 +488,12 @@
   </div>
 
   <div class="footer">
+    <div class="presets" role="group" aria-label="Presets">
+      <button class="preset-step prev" id="preset-prev" aria-label="Previous preset">&#9664;</button>
+      <button class="preset-name" id="preset-name" aria-label="Next preset"></button>
+      <button class="preset-step next" id="preset-next" aria-label="Next preset">&#9654;</button>
+      <span class="label" aria-hidden="true">Preset</span>
+    </div>
     <div class="stomp-group">
       <div class="stomp-wrap"><button class="stomp" id="stomp" aria-label="Stomp" aria-pressed="true"></button></div>
       <span class="lamp" id="lamp"></span>
@@ -660,6 +718,35 @@
     button.addEventListener("click", () => gesture(["stomp"], () => setParam("stomp", params.get("stomp").value >= 0.5 ? 0 : 1)));
   }
 
+  // ---------- presets ----------
+
+  let presets = [];
+
+  function presetIndex() {
+    return presets.findIndex(({ values }) =>
+      Object.entries(values).every(([id, v]) => Math.abs((params.get(id)?.value ?? NaN) - v) < 5e-4));
+  }
+
+  function buildPresets() {
+    const name = document.getElementById("preset-name");
+    const show = () => {
+      const i = presetIndex();
+      name.textContent = i < 0 ? "Custom" : presets[i].name;
+      name.classList.toggle("custom", i < 0);
+    };
+    const step = (dir) => {
+      const i = presetIndex();
+      const next = i < 0 ? (dir > 0 ? 0 : presets.length - 1) : (i + dir + presets.length) % presets.length;
+      const { values } = presets[next];
+      gesture(Object.keys(values), () => Object.entries(values).forEach(([id, v]) => setParam(id, v)));
+    };
+    for (const id of Object.keys(presets[0].values)) watch(id, show);
+    document.getElementById("preset-prev").addEventListener("click", () => step(-1));
+    document.getElementById("preset-next").addEventListener("click", () => step(1));
+    name.addEventListener("click", () => step(1));
+    show();
+  }
+
   let built = false;
 
   function build() {
@@ -667,6 +754,7 @@
       document.querySelectorAll("[data-knob]").forEach(buildKnob);
       drawScope = buildScope();
       buildStomp();
+      if (presets.length) buildPresets();
       built = true;
     }
     for (const id of params.keys()) render(id);
@@ -692,6 +780,8 @@
       case "scope": return drawScope(msg.points);
       case "init":
         document.getElementById("version").textContent = `v${msg.version}`;
+        presets = msg.presets ?? [];
+        document.querySelector(".presets").hidden = !presets.length;
         if (!built) msg.params.forEach((p) => params.set(p.id, { ...p, value: p.default, text: "" }));
         build();
         return;
@@ -734,6 +824,17 @@
       { id: "crossover", name: "Crossover", steps: 0, default: 0.63, text: hz(20, 400) },
       { id: "stomp", name: "Stomp", steps: 1, default: 1, options: ["Off", "On"], text: (n) => n >= 0.5 ? "On" : "Off" },
     ];
+    // The plugin's factory presets (presets.rs), as normalized values.
+    const presets = [
+      { name: "Init", values: { crossover: 0.6304, crush: 0.0000, cutoff: 0.5420, fuzz: 0.6000, gate: 0.3000, level: 0.6667, mode: 0.0000, move: 0.0000, rate: 0.7500, resonance: 0.4000, sag: 0.3000, synth: 0.0000 } },
+      { name: "Machine Gun", values: { crossover: 0.6304, crush: 0.0000, cutoff: 0.5420, fuzz: 0.8000, gate: 0.6000, level: 0.6111, mode: 0.0000, move: 1.0000, rate: 0.7500, resonance: 0.4000, sag: 0.2000, synth: 0.0000 } },
+      { name: "Dying Battery", values: { crossover: 0.6304, crush: 0.4000, cutoff: 0.5420, fuzz: 0.9000, gate: 0.9000, level: 0.6944, mode: 0.0000, move: 0.0000, rate: 0.7500, resonance: 0.4000, sag: 1.0000, synth: 0.0000 } },
+      { name: "Blown Speaker", values: { crossover: 0.6304, crush: 0.2000, cutoff: 0.5420, fuzz: 1.0000, gate: 0.1000, level: 0.5556, mode: 0.0000, move: 0.0000, rate: 0.7500, resonance: 0.4000, sag: 0.5000, synth: 0.0000 } },
+      { name: "Triplet Stutter", values: { crossover: 0.6304, crush: 0.0000, cutoff: 0.5420, fuzz: 0.7000, gate: 0.3000, level: 0.6667, mode: 0.0000, move: 0.9000, rate: 0.5000, resonance: 0.4000, sag: 0.1000, synth: 0.0000 } },
+      { name: "Bass Rocket", values: { crossover: 0.7496, crush: 0.0000, cutoff: 0.4489, fuzz: 0.5000, gate: 0.2000, level: 0.6667, mode: 1.0000, move: 0.6000, rate: 0.7500, resonance: 0.5000, sag: 0.3000, synth: 0.6000 } },
+      { name: "Wah Lead", values: { crossover: 0.6304, crush: 0.0000, cutoff: 0.6795, fuzz: 0.7000, gate: 0.1000, level: 0.6111, mode: 1.0000, move: 0.9000, rate: 0.7500, resonance: 0.7000, sag: 0.3000, synth: 0.3000 } },
+      { name: "Static Choir", values: { crossover: 0.6304, crush: 0.7000, cutoff: 0.8152, fuzz: 0.4000, gate: 0.5000, level: 0.5833, mode: 1.0000, move: 0.3000, rate: 0.7500, resonance: 0.3000, sag: 0.3000, synth: 0.8000 } },
+    ];
     const version = new URLSearchParams(location.search).get("version") ?? "0.0.0";
     const values = Object.fromEntries(specs.map((s) => [s.id, s.default]));
     const send = (msg) => setTimeout(() => window.onPluginMessage(msg));
@@ -744,7 +845,7 @@
     return (msg) => {
       switch (msg.type) {
         case "ready":
-          send({ type: "init", version, params: specs.map(({ text, ...rest }) => ({ options: [], ...rest })) });
+          send({ type: "init", version, presets, params: specs.map(({ text, ...rest }) => ({ options: [], ...rest })) });
           sendValues(specs.map((s) => s.id));
           return;
         case "set":

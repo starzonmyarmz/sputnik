@@ -2,7 +2,7 @@
 
 A sputtering synth fuzz for guitar and bass, with an oscilloscope: a VST3 and CLAP plugin
 
-<img src="docs/sputnik.png" width="555" alt="Sputnik, a cream enamel mission-control console with a stencilled SPUTNIK badge, a green phosphor oscilloscope showing the output, a Sputter/Synth selector with tone, peak, crush, rate and low trims, a row of fuzz, gate, sag, synth, move and level bakelite knobs, a centred footswitch with a red lamp, and a riveted ID plate">
+<img src="docs/sputnik.png" width="555" alt="Sputnik, a cream enamel mission-control console with a stencilled SPUTNIK badge, a green phosphor oscilloscope showing the output, a Sputter/Synth selector with tone, peak, crush, rate and low trims, a row of fuzz, gate, sag, synth, move and level bakelite knobs, a preset stepper in a bakelite window, a centred footswitch with a red lamp, and a riveted ID plate">
 
 A digital fuzz for macOS and Windows: a square wave that chokes and
 sputters, with an oscillator that follows your playing blended in, and a

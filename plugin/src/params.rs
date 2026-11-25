@@ -89,6 +89,37 @@ impl Default for SputnikParams {
 }
 
 impl SputnikParams {
+    /// Every parameter's normalized value for `s`, by ID: what the editor
+    /// sends when a preset is chosen.
+    pub fn normalized(&self, s: &Settings) -> Vec<(&'static str, f32)> {
+        vec![
+            (
+                "mode",
+                self.mode.preview_normalized(if s.mode == Mode::Synth { ModeParam::Synth } else { ModeParam::Sputter }),
+            ),
+            ("fuzz", self.fuzz.preview_normalized(s.fuzz as f32)),
+            ("gate", self.gate.preview_normalized(s.gate as f32)),
+            ("synth", self.synth.preview_normalized(s.synth as f32)),
+            ("move", self.movement.preview_normalized(s.movement as f32)),
+            ("level", self.level.preview_normalized(s.level_db as f32)),
+            ("sag", self.sag.preview_normalized(s.sag as f32)),
+            ("cutoff", self.cutoff.preview_normalized(s.cutoff_hz as f32)),
+            ("resonance", self.resonance.preview_normalized(s.resonance as f32)),
+            ("crush", self.crush.preview_normalized(s.crush as f32)),
+            (
+                "rate",
+                self.rate.preview_normalized(match s.division {
+                    Division::Quarter => RateParam::Quarter,
+                    Division::Eighth => RateParam::Eighth,
+                    Division::EighthTriplet => RateParam::EighthTriplet,
+                    Division::Sixteenth => RateParam::Sixteenth,
+                    Division::SixteenthTriplet => RateParam::SixteenthTriplet,
+                }),
+            ),
+            ("crossover", self.crossover.preview_normalized(s.crossover_hz as f32)),
+        ]
+    }
+
     pub fn settings(&self) -> Settings {
         Settings {
             mode: match self.mode.value() {

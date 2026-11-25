@@ -40,6 +40,7 @@ pub struct WebEditor {
     page: &'static Page,
     params: Arc<dyn Params>,
     feed: Option<Feed>,
+    init: Value,
     changed: Arc<AtomicBool>,
     scale_factor: Arc<AtomicU64>,
 }
@@ -50,9 +51,16 @@ impl WebEditor {
             page,
             params,
             feed: None,
+            init: Value::Null,
             changed: Arc::new(AtomicBool::new(true)),
             scale_factor: Arc::new(AtomicU64::new(1f64.to_bits())),
         }
+    }
+
+    /// Extra fields to send the page in its `init` message.
+    pub fn with_init(mut self, init: Value) -> Self {
+        self.init = init;
+        self
     }
 
     pub fn with_feed(mut self, feed: Feed) -> Self {
@@ -100,6 +108,7 @@ impl Editor for WebEditor {
         let page = self.page;
         let params = self.params.clone();
         let feed = self.feed.clone();
+        let init = self.init.clone();
         let changed = self.changed.clone();
         changed.store(true, Ordering::Release);
         let settings = WindowSettings::new()
@@ -123,7 +132,7 @@ impl Editor for WebEditor {
                         webview: None,
                         tx: Some(tx),
                         inbox,
-                        bridge: Bridge::new(params, page.version),
+                        bridge: Bridge::new(params, page.version, init),
                         feed,
                         ready: false,
                         page_has_focus: false,
